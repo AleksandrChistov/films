@@ -5,7 +5,7 @@
     <input class="search" type="text" name="search" id="search" placeholder="Поиск...">
   </section>
 
-  <div class="container-films">
+  <div class="container-films" *ngIf="!loadingOne">
     <div class="popular-film-wrap" *ngFor="let film of popularFilms">
       <img class="popular-film-img" src="https://image.tmdb.org/t/p/w200/{{film.poster_path}}" alt="">
       <div class="popular-film">
@@ -16,5 +16,7 @@
       </div>
     </div>
   </div>
+
+  <p class="loading-title" *ngIf="loading">Загрузка контента...</p>
 
 </div>

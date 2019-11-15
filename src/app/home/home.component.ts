@@ -44,16 +44,21 @@ export class HomeComponent implements OnInit {
     {id: 37, name: "вестерн"}
   ]
 
+  loadingOne: boolean = true
+  loading: boolean = true
+  page: number = 1
   popularFilms: PopularFilms[] = []
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.loadFilms();
+    window.addEventListener('scroll', this.scroll.bind(this));
   }
 
   loadFilms() {
-    this.http.get<PopularFilms>(`https://api.themoviedb.org/3/movie/popular?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&page=1`)
+    this.loading = true;
+    this.http.get<PopularFilms>(`https://api.themoviedb.org/3/movie/popular?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&page=${this.page || 1}`)
     .subscribe(response => {
       response.results.map((film: any) => {
         film.genre_ids.map((number: number, i: number) => {
@@ -64,8 +69,19 @@ export class HomeComponent implements OnInit {
         });
         film.genre_ids = film.genre_ids.join(', ');
       });
-      this.popularFilms = response.results;
+      this.popularFilms.push(...response.results);
+      this.loading = false;
+      if (this.loadingOne) this.loadingOne = false;
     })
+  }
+
+  scroll() {
+    let scrollY: number = Math.ceil(document.body.scrollTop || document.documentElement.scrollTop);
+    let windowY: number = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (scrollY === windowY) {
+        this.page = this.page + 1;
+        this.loadFilms();
+      }
   }
 
 }
