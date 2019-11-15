@@ -52,15 +52,15 @@ export class HomeComponent implements OnInit {
     window.addEventListener('scroll', this.scroll.bind(this));
   }
 
-  loadFilms() {
+  loadFilms(bool?: boolean) {
     this.loading = true;
     this.http.get<PopularFilms>(`https://api.themoviedb.org/3/movie/popular?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&page=${this.page || 1}`)
     .subscribe(response => {
-      this.pushFilms(response.results);
+      this.pushFilms(response.results, bool);
     });
   }
 
-  pushFilms(response: []): void {
+  pushFilms(response: [], bool?: boolean) {
     let filmFavoritesArr = JSON.parse(localStorage.getItem('filmFavorites')) || [];
     response.map((film: any) => {
       if (filmFavoritesArr.length > 0) {
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
       });
       film.genre_ids = film.genre_ids.join(', '); 
     });
-    this.popularFilms.push(...response);
+    bool ? this.popularFilms = response : this.popularFilms.push(...response);
     this.loading = false;
     if (this.loadingOne) this.loadingOne = false;
   }
@@ -106,6 +106,22 @@ export class HomeComponent implements OnInit {
       });
     }
     localStorage.setItem('filmFavorites', JSON.stringify(filmFavoritesArr));
+  }
+
+  searchFilter(event: KeyboardEvent) {
+    if ((<HTMLInputElement>event.target).value.trim().length === 0) {
+      this.page = 1;
+      this.popularFilms = [];
+      this.loadFilms(true);
+    } else if ((<HTMLInputElement>event.target).value.trim().length > 2) {
+      this.http.get<PopularFilms>(`https://api.themoviedb.org/3/search/movie?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&query=${(<HTMLInputElement>event.target).value}&page=1&include_adult=false`)
+      .subscribe(response => {
+        this.loading = true;
+        this.page = 1;
+        this.popularFilms = [];
+        this.pushFilms(response.results);
+      });
+    }
   }
 
 }
