@@ -1,1 +1,20 @@
-<p>home works!</p>
+<div class="container">
+
+  <section class="header">
+    <img class="home-img" src="/assets/img/logo.png" alt="Logo">
+    <input class="search" type="text" name="search" id="search" placeholder="Поиск...">
+  </section>
+
+  <div class="container-films">
+    <div class="popular-film-wrap" *ngFor="let film of popularFilms">
+      <img class="popular-film-img" src="https://image.tmdb.org/t/p/w200/{{film.poster_path}}" alt="">
+      <div class="popular-film">
+        <h3 class="popular-film__title">{{film.title}}</h3>
+        <p class="popular-film__descr">{{film.overview | slice:0:300}}...</p>
+          <span class="popular-film__genre">{{film.genre_ids}}</span>
+        <button class="home-btn popular-film__btn">Подробнее</button>
+      </div>
+    </div>
+  </div>
+
+</div>
