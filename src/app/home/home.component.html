@@ -24,6 +24,7 @@
             </svg>
           </a>
         </ng-template>
+        <p class="raiting-film">{{film.vote_average}}</p>
         <h3 class="popular-film__title">{{film.title}}</h3>
         <p class="popular-film__descr">{{film.overview | slice:0:300}}...</p>
           <span class="popular-film__genre">{{film.genre_ids | titlecase}}</span>
