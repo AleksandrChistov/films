@@ -9,6 +9,18 @@
     <div class="popular-film-wrap" *ngFor="let film of popularFilms">
       <img class="popular-film-img" src="https://image.tmdb.org/t/p/w200/{{film.poster_path}}" alt="">
       <div class="popular-film">
+        <a *ngIf="!film.favorite; else btnFavorite" (click)="changeFavorites(film.id, true)" class="add-favorites-btn" title="Добавить фильм в избранное" aria-label="Добавить фильм в избранное">
+          <svg class="popular-film__star-img" width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+            <g><path d="M974.1,461.8l-180.7,163c-11.4,11.7-16.6,28.5-13.9,45l42.7,261.8c3.3,20.7,0,35.6-16.2,48c-9.1,7-20,10.6-30.9,10.6c-8.4,0-16.7-2.1-24.4-6.4L522.5,854.3c-14.1-7.8-30.9-7.8-44.9,0L258.9,983.7c-17.7,9.8-39.2,8.2-55.4-4.2c-16.2-12.4-29.1-27.2-25.7-48l52.3-267.2c2.7-16.5-2.5-33.3-13.9-45L25.9,461.8c-14.4-14.7-19.5-36.7-13.4-56.7c6.2-20,22.6-34.6,42.4-37.6l247.6-45.7c15.7-2.4,29.3-12.8,36.3-27.8l114-253.1C461.7,21.9,480,10,500,10c20,0,38.2,11.9,47.1,30.8l109.5,253.1c7,15,20.6,25.4,36.3,27.8l252,45.7c19.8,3,36.2,17.6,42.4,37.6C993.6,425.1,988.4,447.1,974.1,461.8"/></g>
+          </svg>
+        </a>
+        <ng-template #btnFavorite>
+          <a (click)="changeFavorites(film.id, false)" class="add-favorites-btn popular-film__star-img_active" title="Удалить фильм из избранного" aria-label="Удалить фильм из избранного">
+            <svg class="popular-film__star-img" width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+              <g><path d="M974.1,461.8l-180.7,163c-11.4,11.7-16.6,28.5-13.9,45l42.7,261.8c3.3,20.7,0,35.6-16.2,48c-9.1,7-20,10.6-30.9,10.6c-8.4,0-16.7-2.1-24.4-6.4L522.5,854.3c-14.1-7.8-30.9-7.8-44.9,0L258.9,983.7c-17.7,9.8-39.2,8.2-55.4-4.2c-16.2-12.4-29.1-27.2-25.7-48l52.3-267.2c2.7-16.5-2.5-33.3-13.9-45L25.9,461.8c-14.4-14.7-19.5-36.7-13.4-56.7c6.2-20,22.6-34.6,42.4-37.6l247.6-45.7c15.7-2.4,29.3-12.8,36.3-27.8l114-253.1C461.7,21.9,480,10,500,10c20,0,38.2,11.9,47.1,30.8l109.5,253.1c7,15,20.6,25.4,36.3,27.8l252,45.7c19.8,3,36.2,17.6,42.4,37.6C993.6,425.1,988.4,447.1,974.1,461.8"/></g>
+            </svg>
+          </a>
+        </ng-template>
         <h3 class="popular-film__title">{{film.title}}</h3>
         <p class="popular-film__descr">{{film.overview | slice:0:300}}...</p>
           <span class="popular-film__genre">{{film.genre_ids | titlecase}}</span>

@@ -8,11 +8,7 @@ export interface PopularFilms {
   title: string
   genre_ids: []
   results?: []
-}
-
-export interface Genres {
-  id: number
-  name: string
+  favorite?: boolean
 }
 
 @Component({
@@ -22,7 +18,7 @@ export interface Genres {
 })
 export class HomeComponent implements OnInit {
 
-  genres: Genres[] = [
+  genres = [
     {id: 28, name: "боевик"},
     {id: 12, name: "приключения"},
     {id: 16, name: "мультфильм"},
@@ -60,28 +56,56 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.http.get<PopularFilms>(`https://api.themoviedb.org/3/movie/popular?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&page=${this.page || 1}`)
     .subscribe(response => {
-      response.results.map((film: any) => {
-        film.genre_ids.map((number: number, i: number) => {
-          let genreArr = this.genres.find(genre => number === genre.id);
-          if (genreArr) {
-            film.genre_ids[i] = genreArr.name;
+      this.pushFilms(response.results);
+    });
+  }
+
+  pushFilms(response: []): void {
+    let filmFavoritesArr = JSON.parse(localStorage.getItem('filmFavorites')) || [];
+    response.map((film: any) => {
+      if (filmFavoritesArr.length > 0) {
+        filmFavoritesArr.forEach((filmFavorite: any )=> {
+          if (filmFavorite.id === film.id) {
+            film.favorite = true;
           }
         });
-        film.genre_ids = film.genre_ids.join(', ');
+      }
+      film.genre_ids.map((number: number, i: number) => {
+        let genreArr = this.genres.find(genre => number === genre.id);
+        if (genreArr) {
+          film.genre_ids[i] = genreArr.name;
+        }
       });
-      this.popularFilms.push(...response.results);
-      this.loading = false;
-      if (this.loadingOne) this.loadingOne = false;
-    })
+      film.genre_ids = film.genre_ids.join(', '); 
+    });
+    this.popularFilms.push(...response);
+    this.loading = false;
+    if (this.loadingOne) this.loadingOne = false;
   }
 
   scroll() {
     let scrollY: number = Math.ceil(document.body.scrollTop || document.documentElement.scrollTop);
     let windowY: number = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      if (scrollY === windowY) {
-        this.page = this.page + 1;
-        this.loadFilms();
-      }
+    if (scrollY === windowY) {
+      this.page = this.page + 1;
+      this.loadFilms();
+    }
+  }
+
+  changeFavorites(id: number, context: boolean) {
+    let film = this.popularFilms.find(film => film.id === id);
+    film.favorite = !film.favorite;
+    let filmFavoritesArr = JSON.parse(localStorage.getItem('filmFavorites')) || [];
+    if (context) {
+      filmFavoritesArr.push(film);
+    } else {
+      filmFavoritesArr.map((item: any, index: number) => {
+        if (item.id === film.id) {
+          filmFavoritesArr.splice(index, 1);
+        }
+      });
+    }
+    localStorage.setItem('filmFavorites', JSON.stringify(filmFavoritesArr));
   }
 
 }
