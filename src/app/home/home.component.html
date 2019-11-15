@@ -28,7 +28,7 @@
         <h3 class="popular-film__title">{{film.title}}</h3>
         <p class="popular-film__descr">{{film.overview | slice:0:300}}...</p>
           <span class="popular-film__genre">{{film.genre_ids | titlecase}}</span>
-        <button class="home-btn popular-film__btn">Подробнее</button>
+        <a [routerLink]="['/film', film.id]" class="home-btn popular-film__btn">Подробнее</a>
       </div>
     </div>
   </div>
