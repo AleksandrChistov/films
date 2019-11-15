@@ -1,1 +1,22 @@
-<p>film works!</p>
+<div class="film-wrap">
+  <section class="film">
+    <img class="film__img" src="https://image.tmdb.org/t/p/w300/{{film.poster_path}}" alt="">
+    <div class="film-main">
+      <h2 class="film__title">{{film.title}}</h2>
+      <p class="film__descr">{{film.overview}}</p>
+      <div class="film__info-wrap">
+        <div class="rating">
+          <p class="raiting-circle">Средняя оценка 
+            <span class="raiting-circle__number">{{film.vote_average}}</span>
+          </p>
+          <p class="ratin__votes"><strong>Количество голосов</strong>: {{film.vote_count}}</p>
+        </div>
+        <div class="genres-and-data">
+          <p class="film__duration"><strong>Продолжительность</strong>: {{film.runtime}} мин.</p>
+          <p class="genres"><strong>Жанр</strong>: {{genre | titlecase}}.</p> 
+          <p class="date-relise"><strong>Дата выхода</strong>: {{film.release_date | date:'dd.MM.yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
