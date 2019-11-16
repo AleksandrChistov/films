@@ -1,26 +1,30 @@
 .film
   display flex
+  padding 0 25px 20px
+
+.film__img
+  max-height 450px
 
 .film__title
   text-align center
   margin 10px
 
 .film-main
-  padding 0 40px
+  padding-left 30px
 
 .film__descr
-  line-height 20px
+  line-height 22px
 
-.film__duration, .genres, .date-relise
-  border-bottom 1px solid #01d277
-  padding-bottom 10px
-  margin 10px 0
-
-.film__duration
-  margin-top 20px
+.film__duration, .date-relise
+  margin 15px 0 10px
 
 .genres
-  margin-bottom 10px
+  margin 0
+  padding-bottom 10px
+  border-bottom 1px solid #01d277
+
+.film__duration
+  margin-right 20px
 
 .film__info-wrap
   display flex
@@ -40,14 +44,17 @@
   border-radius 50%
   display flex
   flex-direction column
-  justify-content center
+  justify-content flex-end
   align-items center
   margin 0 0 10px
 
+.info-wrap-right
+  flex-basis 73%
+
 .genres-and-data
-    display flex
-    flex-direction column
-    flex-basis 70%
+  display flex
+  border-bottom 1px solid #01d277
+  margin-bottom 5px
 
 .ratin__votes
   font-size 14px
@@ -55,3 +62,42 @@
 
 .raiting-circle__number
   font-size 34px
+  padding 5px 0 30px
+
+.budget-wrap
+  display flex
+  border-bottom 1px solid #01d277
+  margin-bottom 21px
+
+.budget
+  margin-right 20px
+
+.budget, .revenue
+  margin-bottom 10px
+
+.company-wrap
+  border-bottom 1px solid #01d277
+
+.companies
+  margin-bottom 10px
+
+.actors
+  display flex
+  justify-content space-between
+  padding 0 25px
+
+.actor
+  text-align center
+  flex-basis 20%
+
+.actor__img
+  max-width 130px
+
+.actor-name-wrap
+  display flex
+  flex-direction column
+  align-items center
+  margin: 5px
+
+.actor__name
+  font-weight bold

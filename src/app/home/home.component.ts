@@ -84,9 +84,9 @@ export class HomeComponent implements OnInit {
   }
 
   scroll() {
-    let scrollY: number = Math.ceil(document.body.scrollTop || document.documentElement.scrollTop);
-    let windowY: number = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    if (scrollY === windowY) {
+    let scrollY: number = document.body.scrollTop || document.documentElement.scrollTop;
+    let windowY: number = (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+    if (scrollY + 1 >= windowY) {
       this.page = this.page + 1;
       this.loadFilms();
     }
@@ -108,13 +108,15 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('filmFavorites', JSON.stringify(filmFavoritesArr));
   }
 
-  searchFilter(event: KeyboardEvent) {
-    if ((<HTMLInputElement>event.target).value.trim().length === 0) {
+  search(eventValue: string) {
+    console.log(eventValue);
+    
+    if (eventValue.trim().length === 0) {
       this.page = 1;
       this.popularFilms = [];
       this.loadFilms(true);
-    } else if ((<HTMLInputElement>event.target).value.trim().length > 2) {
-      this.http.get<PopularFilms>(`https://api.themoviedb.org/3/search/movie?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&query=${(<HTMLInputElement>event.target).value}&page=1&include_adult=false`)
+    } else if (eventValue.trim().length > 2) {
+      this.http.get<PopularFilms>(`https://api.themoviedb.org/3/search/movie?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&query=${eventValue}&page=1&include_adult=false`)
       .subscribe(response => {
         this.loading = true;
         this.page = 1;

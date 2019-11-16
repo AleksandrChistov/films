@@ -1,6 +1,8 @@
+<app-header (onSearch)="search($event)"></app-header>
+
 <div class="film-wrap">
   <section class="film">
-    <img class="film__img" src="https://image.tmdb.org/t/p/w300/{{film.poster_path}}" alt="">
+    <img class="film__img" src="{{urlImg}}" alt="">
     <div class="film-main">
       <h2 class="film__title">{{film.title}}</h2>
       <p class="film__descr">{{film.overview}}</p>
@@ -11,12 +13,31 @@
           </p>
           <p class="ratin__votes"><strong>Количество голосов</strong>: {{film.vote_count}}</p>
         </div>
-        <div class="genres-and-data">
-          <p class="film__duration"><strong>Продолжительность</strong>: {{film.runtime}} мин.</p>
+        <div class="info-wrap-right">
+          <div class="genres-and-data">
+            <p class="film__duration"><strong>Продолжительность</strong>: {{film.runtime}} мин.</p>
+            <p class="date-relise"><strong>Дата выхода</strong>: {{film.release_date | date:'dd.MM.yyyy'}}</p>
+          </div>
+          <div class="budget-wrap">
+            <p class="budget"><strong>Бюджет: </strong>{{film.budget | currency:'USD':'symbol':'1.0-0'}}</p>
+            <p class="revenue"><strong>Сборы в мире: </strong>{{film.revenue | currency:'USD':'symbol':'1.0-0'}}</p>
+          </div>
           <p class="genres"><strong>Жанр</strong>: {{genre | titlecase}}.</p> 
-          <p class="date-relise"><strong>Дата выхода</strong>: {{film.release_date | date:'dd.MM.yyyy'}}</p>
         </div>
       </div>
+      <div class="company-wrap">
+        <p class="countries"><strong>Страна: </strong>{{productionCountries}}.</p>
+        <p class="companies"><strong>Компания: </strong>{{productionCompanies}}.</p>
+      </div>
+    </div>
+  </section>
+  <section class="actors">
+    <div class="actor" *ngFor="let actor of actors" >
+      <img class="actor__img" src="https://image.tmdb.org/t/p/w200{{actor.profile_path}}" alt="">
+      <p class="actor-name-wrap">
+        <span class="actor__name">{{actor.name}}</span>
+        <span class="actor__character">({{actor.character}})</span>
+      </p>
     </div>
   </section>
 </div>
