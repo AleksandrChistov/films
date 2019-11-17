@@ -4,7 +4,7 @@
   <section class="film">
     <img class="film__img" src="{{urlImg}}" alt="">
     <div class="film-main">
-      <h2 class="film__title">{{film.title}}</h2>
+      <h1 class="film__title">{{film.title}}</h1>
       <p class="film__descr">{{film.overview}}</p>
       <div class="film__info-wrap">
         <div class="rating">
@@ -32,7 +32,7 @@
     </div>
   </section>
   <section class="actors">
-    <div class="actor" *ngFor="let actor of actors" >
+    <div class="actor" *ngFor="let actor of actors">
       <img class="actor__img" src="https://image.tmdb.org/t/p/w200{{actor.profile_path}}" alt="">
       <p class="actor-name-wrap">
         <span class="actor__name">{{actor.name}}</span>
@@ -40,4 +40,32 @@
       </p>
     </div>
   </section>
+  <section class="film-video" *ngIf="urlVideoSecurity">
+    <h2 class="film-video__title">Видео (трейлер)</h2>
+    <iframe class="film-video-frame" width="640" height="390" [src]="urlVideoSecurity" allowfullscreen></iframe>
+  </section>
+  <section class="recommendations">
+    <h2 class="recommendations-title">Рекомендованные фильмы</h2>
+    <div class="recommendations-film" *ngFor="let film of recommendations">
+      <a class="recommendations-link" [routerLink]="['/film', film.id]">
+        <img class="recommendations__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+        <p class="recommendations-title-wrap">
+          <span class="recommendations__title">{{film.title}}</span>
+          <span class="recommendations__vote_average">{{film.vote_average}}</span>
+        </p>
+      </a>
+    </div>
+  </section>
+  <section class="similar">
+      <h2 class="similar-title">Похожие фильмы</h2>
+      <div class="similar-film" *ngFor="let film of similar">
+        <a class="similar-link" [routerLink]="['/film', film.id]">
+          <img class="similar__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+          <p class="similar-title-wrap">
+            <span class="similar__title">{{film.title}}</span>
+            <span class="similar__vote_average">{{film.vote_average}}</span>
+          </p>
+        </a>
+      </div>
+    </section>
 </div>

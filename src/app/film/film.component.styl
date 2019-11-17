@@ -49,7 +49,7 @@
   margin 0 0 10px
 
 .info-wrap-right
-  flex-basis 73%
+  flex-basis 72%
 
 .genres-and-data
   display flex
@@ -84,7 +84,9 @@
 .actors
   display flex
   justify-content space-between
-  padding 0 25px
+  padding 0 25px 20px
+  margin-bottom 30px
+  border-bottom 1px solid #01d277
 
 .actor
   text-align center
@@ -101,3 +103,56 @@
 
 .actor__name
   font-weight bold
+
+.film-video
+  text-align center
+  margin-bottom 20px
+  padding-bottom 40px
+  border-bottom 1px solid #01d277
+
+.film-video-frame
+  border none
+
+.recommendations, .similar
+  display flex
+  flex-wrap wrap
+  justify-content space-between
+  padding-bottom 20px
+  margin-bottom 20px
+  border-bottom 1px solid #01d277
+
+.similar
+  margin-bottom 150px
+
+.recommendations-film, .similar-film
+  flex-basis 200px
+  position relative
+  &:hover
+    opacity 0.6
+
+.recommendations__vote_average, .similar__vote_average
+  font-weight bold
+  font-size 14px
+  position absolute
+  top 10px
+  right 10px
+  background #fff
+  width 27px
+  height 27px
+  border-radius 50%
+  display flex
+  justify-content center
+  align-items center
+
+.recommendations-title-wrap, .similar-title-wrap
+  margin-top 0
+  text-align center
+
+.recommendations-title, .similar-title
+  flex-basis 100%
+  text-align center
+  margin-bottom 30px
+
+.recommendations-link, .similar-link
+  text-decoration none
+  color #081c24

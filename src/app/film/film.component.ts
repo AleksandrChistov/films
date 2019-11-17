@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 export interface Film {
   genres?: []
@@ -9,6 +10,15 @@ export interface Film {
   poster_path?: string
   credits?: {
     cast: []
+  }
+  videos?: {
+    results: {}
+  }
+  recommendations?: {
+    results: []
+  }
+  similar?: {
+    results: []
   }
 }
 
@@ -24,10 +34,15 @@ export class FilmComponent implements OnInit {
   productionCompanies: string = ''
   productionCountries: string = ''
   urlImg: string = ''
+  urlVideo: string = ''
+  urlVideoSecurity: SafeResourceUrl
   actors: object[] = []
+  recommendations: object[] = [] 
+  similar: object[] = []
   
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -38,6 +53,7 @@ export class FilmComponent implements OnInit {
   loadFilm(id: number) {
     this.http.get<Film>(`https://api.themoviedb.org/3/movie/${id}?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&append_to_response=recommendations%2Csimilar%2Cvideos%2Ccredits`)
       .subscribe(response => {
+        window.scrollTo(0,0);
         let arr = [];
         response.genres.forEach((genre: any) => {
           arr.push(genre.name);
@@ -54,7 +70,13 @@ export class FilmComponent implements OnInit {
         });
         this.productionCountries = arr.join(', ');
         this.actors = response.credits.cast.filter((val: object, i: number) => i < 6);
-        this.urlImg = `https://image.tmdb.org/t/p/w300${response.poster_path}`
+        this.urlImg = `https://image.tmdb.org/t/p/w300${response.poster_path}`;
+        if (response.videos.results[0]) {
+          this.urlVideo = `https://www.youtube.com/embed/${response.videos.results[0].key}?rel=0;showinfo=0;`;
+          this.urlVideoSecurity = this.sanitizer.bypassSecurityTrustResourceUrl(this.urlVideo);
+        }
+        this.recommendations = response.recommendations.results.filter((val: object, i: number) => i < 10);
+        this.similar = response.similar.results.filter((val: object, i: number) => i < 10);
         this.film = response;
         console.log(response);
     });
