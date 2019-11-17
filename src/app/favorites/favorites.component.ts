@@ -38,7 +38,7 @@ export class FavoritesComponent implements OnInit {
 
     if (filmFavoritesArr.length > 0) {
       filmFavoritesArr.map((filmFavorite: any )=> {  
-        if (!filmFavorite.genre_ids) {
+        if (!filmFavorite.genre_ids && filmFavorite.genres.length) {
           filmFavorite.genres.map((genre: any, i: number) => {
             filmFavorite.genre_ids = [];
             filmFavorite.genre_ids.push(genre.name);

@@ -6,7 +6,7 @@
 <div class="container-favorite-films" *ngIf="!loadingFavorite">
   <div *ngIf="favoriteFilms.length; else noItems">
     <div class="favorite-film-wrap" *ngFor="let film of favoriteFilms">
-      <img *ngIf="film.poster_path; else defaultImgSimilar" class="favorite-film-img" src="https://image.tmdb.org/t/p/w400{{film.backdrop_path}}" alt="">
+      <img *ngIf="film.backdrop_path; else defaultImgSimilar" class="favorite-film-img" src="https://image.tmdb.org/t/p/w400{{film.backdrop_path}}" alt="">
         <ng-template #defaultImgSimilar>
           <img class="favorite-film-img" src="/assets/img/default_img_favorite.jpg" alt="">
         </ng-template>
@@ -26,7 +26,10 @@
         <p class="raiting-film raiting-favorite">{{film.vote_average}}</p>
         <h3 class="popular-film__title">{{film.title}}</h3>
         <p class="popular-film__descr">{{film.overview | slice:0:300}}...</p>
-          <span class="popular-film__genre">{{film.genre_ids | titlecase}}</span>
+          <span class="popular-film__genre" *ngIf="film.genre_ids; else noGenre">{{film.genre_ids | titlecase}}</span>
+          <ng-template #noGenre>
+            <span class="popular-film__genre">...</span>
+          </ng-template>
         <a [routerLink]="['/film', film.id]" class="home-btn popular-film__btn">Подробнее</a>
       </div>
     </div>
