@@ -50,7 +50,10 @@
 
   <section class="actors">
     <div class="actor" *ngFor="let actor of actors">
-      <img class="actor__img" src="https://image.tmdb.org/t/p/w200{{actor.profile_path}}" alt="">
+      <img *ngIf="actor.profile_path; else defaultImgActor" class="actor__img" src="https://image.tmdb.org/t/p/w200{{actor.profile_path}}" alt="">
+      <ng-template #defaultImgActor>
+        <img class="actor__img" src="/assets/img/default_actor_img.jpg" alt="">
+      </ng-template>
       <p class="actor-name-wrap">
         <span class="actor__name">{{actor.name}}</span>
         <span class="actor__character">({{actor.character}})</span>
@@ -63,11 +66,14 @@
     <iframe class="film-video-frame" width="640" height="390" [src]="urlVideoSecurity" allowfullscreen></iframe>
   </section>
 
-  <section class="recommendations">
+  <section class="recommendations" *ngIf="recommendations.length">
     <h2 class="recommendations-title">Рекомендованные фильмы</h2>
     <div class="recommendations-film" *ngFor="let film of recommendations">
       <a class="recommendations-link" [routerLink]="['/film', film.id]">
-        <img class="recommendations__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+        <img *ngIf="film.backdrop_path; else defaultImg" class="recommendations__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+        <ng-template #defaultImg>
+          <img class="recommendations__img" src="/assets/img/default_img_s.jpg" alt="">
+        </ng-template>
         <p class="recommendations-title-wrap">
           <span class="recommendations__title">{{film.title}}</span>
           <span class="recommendations__vote_average">{{film.vote_average}}</span>
@@ -76,11 +82,14 @@
     </div>
   </section>
 
-  <section class="similar">
+  <section class="similar" *ngIf="similar.length">
     <h2 class="similar-title">Похожие фильмы</h2>
     <div class="similar-film" *ngFor="let film of similar">
       <a class="similar-link" [routerLink]="['/film', film.id]">
-        <img class="similar__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+        <img *ngIf="film.backdrop_path; else defaultImgSimilar" class="similar__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+        <ng-template #defaultImgSimilar>
+          <img class="similar__img" src="/assets/img/default_img_s.jpg" alt="">
+        </ng-template>
         <p class="similar-title-wrap">
           <span class="similar__title">{{film.title}}</span>
           <span class="similar__vote_average">{{film.vote_average}}</span>
@@ -88,5 +97,9 @@
       </a>
     </div>
   </section>
+
+  <footer class="footer">
+    <img class="home-img" src="/assets/img/logo.png" alt="Logo">
+  </footer>
     
 </div>

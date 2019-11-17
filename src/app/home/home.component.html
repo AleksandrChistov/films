@@ -2,7 +2,10 @@
 
 <div class="container-films" *ngIf="!loadingOne">
   <div class="popular-film-wrap" *ngFor="let film of popularFilms">
-    <img class="popular-film-img" src="https://image.tmdb.org/t/p/w200/{{film.poster_path}}" alt="">
+    <img *ngIf="film.poster_path; else defaultImgSimilar" class="popular-film-img" src="https://image.tmdb.org/t/p/w200/{{film.poster_path}}" alt="">
+      <ng-template #defaultImgSimilar>
+        <img class="popular-film-img" src="/assets/img/default_home_img.jpg" alt="">
+      </ng-template>
     <div class="popular-film">
       <a *ngIf="!film.favorite; else btnFavorite" (click)="changeFavorites(film.id, true)" class="add-favorites-btn" title="Добавить фильм в избранное" aria-label="Добавить фильм в избранное">
         <svg class="popular-film__star-img" width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
