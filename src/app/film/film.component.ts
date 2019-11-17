@@ -8,6 +8,8 @@ export interface Film {
   production_companies?: []
   production_countries?: []
   poster_path?: string
+  id?: number
+  favorite?: boolean
   credits?: {
     cast: []
   }
@@ -77,6 +79,17 @@ export class FilmComponent implements OnInit {
         }
         this.recommendations = response.recommendations.results.filter((val: object, i: number) => i < 10);
         this.similar = response.similar.results.filter((val: object, i: number) => i < 10);
+        
+        let filmFavoritesArr = JSON.parse(localStorage.getItem('filmFavorites')) || [];
+        
+        if (filmFavoritesArr.length > 0) {
+          filmFavoritesArr.forEach((filmFavorite: any )=> {
+            if (filmFavorite.id === response.id) {
+              response.favorite = true;
+            }
+          });
+        }
+
         this.film = response;
         console.log(response);
     });
@@ -98,6 +111,21 @@ export class FilmComponent implements OnInit {
     //     this.pushFilms(response.results);
     //   });
     // }
+  }
+
+  changeFavorites(context: boolean) {
+    this.film.favorite = !this.film.favorite;
+    let filmFavoritesArr = JSON.parse(localStorage.getItem('filmFavorites')) || [];
+    if (context) {
+      filmFavoritesArr.push(this.film);
+    } else {
+      filmFavoritesArr.map((item: any, index: number) => {
+        if (item.id === this.film.id) {
+          filmFavoritesArr.splice(index, 1);
+        }
+      });
+    }
+    localStorage.setItem('filmFavorites', JSON.stringify(filmFavoritesArr));
   }
 
 }

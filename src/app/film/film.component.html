@@ -1,6 +1,22 @@
 <app-header (onSearch)="search($event)"></app-header>
 
 <div class="film-wrap">
+
+    <div *ngIf="!film.favorite; else btnFavorite" (click)="changeFavorites(true)" class="add-favorites-btn film__favorites-btn">
+      <svg class="popular-film__star-img" width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+        <g><path d="M974.1,461.8l-180.7,163c-11.4,11.7-16.6,28.5-13.9,45l42.7,261.8c3.3,20.7,0,35.6-16.2,48c-9.1,7-20,10.6-30.9,10.6c-8.4,0-16.7-2.1-24.4-6.4L522.5,854.3c-14.1-7.8-30.9-7.8-44.9,0L258.9,983.7c-17.7,9.8-39.2,8.2-55.4-4.2c-16.2-12.4-29.1-27.2-25.7-48l52.3-267.2c2.7-16.5-2.5-33.3-13.9-45L25.9,461.8c-14.4-14.7-19.5-36.7-13.4-56.7c6.2-20,22.6-34.6,42.4-37.6l247.6-45.7c15.7-2.4,29.3-12.8,36.3-27.8l114-253.1C461.7,21.9,480,10,500,10c20,0,38.2,11.9,47.1,30.8l109.5,253.1c7,15,20.6,25.4,36.3,27.8l252,45.7c19.8,3,36.2,17.6,42.4,37.6C993.6,425.1,988.4,447.1,974.1,461.8"/></g>
+      </svg>
+      <p class="film__favorites-title">Добавить фильм в избранное</p>
+    </div>
+    <ng-template #btnFavorite>
+      <div (click)="changeFavorites(false)" class="add-favorites-btn popular-film__star-img_active film__favorites-btn-active">
+        <svg class="popular-film__star-img" width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+          <g><path d="M974.1,461.8l-180.7,163c-11.4,11.7-16.6,28.5-13.9,45l42.7,261.8c3.3,20.7,0,35.6-16.2,48c-9.1,7-20,10.6-30.9,10.6c-8.4,0-16.7-2.1-24.4-6.4L522.5,854.3c-14.1-7.8-30.9-7.8-44.9,0L258.9,983.7c-17.7,9.8-39.2,8.2-55.4-4.2c-16.2-12.4-29.1-27.2-25.7-48l52.3-267.2c2.7-16.5-2.5-33.3-13.9-45L25.9,461.8c-14.4-14.7-19.5-36.7-13.4-56.7c6.2-20,22.6-34.6,42.4-37.6l247.6-45.7c15.7-2.4,29.3-12.8,36.3-27.8l114-253.1C461.7,21.9,480,10,500,10c20,0,38.2,11.9,47.1,30.8l109.5,253.1c7,15,20.6,25.4,36.3,27.8l252,45.7c19.8,3,36.2,17.6,42.4,37.6C993.6,425.1,988.4,447.1,974.1,461.8"/></g>
+        </svg>
+        <p class="film__favorites-title">Удалить фильм из избранного</p>
+      </div>
+    </ng-template>
+
   <section class="film">
     <img class="film__img" src="{{urlImg}}" alt="">
     <div class="film-main">
@@ -31,6 +47,7 @@
       </div>
     </div>
   </section>
+
   <section class="actors">
     <div class="actor" *ngFor="let actor of actors">
       <img class="actor__img" src="https://image.tmdb.org/t/p/w200{{actor.profile_path}}" alt="">
@@ -40,10 +57,12 @@
       </p>
     </div>
   </section>
+
   <section class="film-video" *ngIf="urlVideoSecurity">
     <h2 class="film-video__title">Видео (трейлер)</h2>
     <iframe class="film-video-frame" width="640" height="390" [src]="urlVideoSecurity" allowfullscreen></iframe>
   </section>
+
   <section class="recommendations">
     <h2 class="recommendations-title">Рекомендованные фильмы</h2>
     <div class="recommendations-film" *ngFor="let film of recommendations">
@@ -56,16 +75,18 @@
       </a>
     </div>
   </section>
+
   <section class="similar">
-      <h2 class="similar-title">Похожие фильмы</h2>
-      <div class="similar-film" *ngFor="let film of similar">
-        <a class="similar-link" [routerLink]="['/film', film.id]">
-          <img class="similar__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
-          <p class="similar-title-wrap">
-            <span class="similar__title">{{film.title}}</span>
-            <span class="similar__vote_average">{{film.vote_average}}</span>
-          </p>
-        </a>
-      </div>
-    </section>
+    <h2 class="similar-title">Похожие фильмы</h2>
+    <div class="similar-film" *ngFor="let film of similar">
+      <a class="similar-link" [routerLink]="['/film', film.id]">
+        <img class="similar__img" src="https://image.tmdb.org/t/p/w200{{film.backdrop_path}}" alt="">
+        <p class="similar-title-wrap">
+          <span class="similar__title">{{film.title}}</span>
+          <span class="similar__vote_average">{{film.vote_average}}</span>
+        </p>
+      </a>
+    </div>
+  </section>
+    
 </div>
