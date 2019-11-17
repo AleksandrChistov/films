@@ -1,6 +1,6 @@
 <app-header (onSearch)="search($event)"></app-header>
 
-<div class="film-wrap">
+<div class="film-wrap" *ngIf="!loadingFilm">
 
     <div *ngIf="!film.favorite; else btnFavorite" (click)="changeFavorites(true)" class="add-favorites-btn film__favorites-btn">
       <svg class="popular-film__star-img" width="30" height="30" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
@@ -103,3 +103,5 @@
   </footer>
     
 </div>
+
+<p class="loading-title" *ngIf="loadingFilm">Загрузка контента...</p>
