@@ -32,6 +32,8 @@ export class FavoritesComponent implements OnInit {
 
   loadFavoriteFilms() {
     this.loadingFavorite = true
+    this.appSearchService.resultsAdd = false;
+    this.appSearchService.text = '';
     let filmFavoritesArr: FavoriteFilms[] = JSON.parse(localStorage.getItem('filmFavorites')) || [];
 
     if (filmFavoritesArr.length > 0) {
@@ -47,7 +49,6 @@ export class FavoritesComponent implements OnInit {
     }
     this.favoriteFilms = filmFavoritesArr;
     this.loadingFavorite = false;
-    console.log(this.favoriteFilms);
   }
 
   changeFavorites(id: number, context: boolean) {

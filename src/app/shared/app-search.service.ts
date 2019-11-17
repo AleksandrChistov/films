@@ -22,13 +22,14 @@ export class AppSearchService {
 
   constructor(private http: HttpClient) { }
 
-  searchAdd(value) {
+  searchAdd(value: string) {
     if (value.trim().length > 1) {
       this.resultsAdd = true;
       this.http.get<SeacrhFilms>(`https://api.themoviedb.org/3/search/movie?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&query=${value}&page=1&include_adult=false`)
       .subscribe(response => {
         this.seacrhFilms = response.results;
-        console.log(this.seacrhFilms);
+      }, error => {
+        console.log(error.message);
       });
     } else {
       this.resultsAdd = false;

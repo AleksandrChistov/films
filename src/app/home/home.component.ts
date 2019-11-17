@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AppSearchService } from '../shared/app-search.service';
 
 export interface PopularFilms {
   id: number
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit {
   page: number = 1
   popularFilms: PopularFilms[] = []
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private appSearchService: AppSearchService) { }
 
   ngOnInit() {
     this.loadFilms();
@@ -54,9 +55,13 @@ export class HomeComponent implements OnInit {
 
   loadFilms(bool?: boolean) {
     this.loading = true;
+    this.appSearchService.resultsAdd = false;
+    this.appSearchService.text = '';
     this.http.get<PopularFilms>(`https://api.themoviedb.org/3/movie/popular?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&page=${this.page || 1}`)
     .subscribe(response => {
       this.pushFilms(response.results, bool);
+    }, error => {
+      console.log(error.message);
     });
   }
 
@@ -109,8 +114,6 @@ export class HomeComponent implements OnInit {
   }
 
   search(eventValue: string) {
-    console.log(eventValue);
-    
     if (eventValue.trim().length === 0) {
       this.page = 1;
       this.popularFilms = [];
@@ -122,6 +125,8 @@ export class HomeComponent implements OnInit {
         this.page = 1;
         this.popularFilms = [];
         this.pushFilms(response.results);
+      }, error => {
+        console.log(error.message);
       });
     }
   }

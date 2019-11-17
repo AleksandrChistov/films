@@ -102,7 +102,8 @@ export class FilmComponent implements OnInit {
 
         this.film = response;
         this.loadingFilm = false;
-        console.log(response);
+    }, error => {
+      console.log(error.message);
     });
   }
 

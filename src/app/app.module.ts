@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { FilmComponent } from './film/film.component';
 import { FavoritesComponent } from './favorites/favorites.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [

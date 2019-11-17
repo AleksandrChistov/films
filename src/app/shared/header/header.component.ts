@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { AppSearchService } from '../shared/app-search.service';
+import { AppSearchService } from '../app-search.service';
 
 @Component({
   selector: 'app-header',
