@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AppSearchService } from '../shared/app-search.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>()
 
-  constructor() { }
+  constructor(private appSearchService: AppSearchService) { }
 
   ngOnInit() {
   }

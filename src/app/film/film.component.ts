@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AppSearchService } from '../shared/app-search.service';
 
 export interface Film {
   genres?: []
@@ -44,7 +45,7 @@ export class FilmComponent implements OnInit {
   loadingFilm: boolean = true
 
   constructor(private route: ActivatedRoute, private http: HttpClient,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer, private appSearchService: AppSearchService) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -54,6 +55,8 @@ export class FilmComponent implements OnInit {
 
   loadFilm(id: number) {
     this.loadingFilm = true;
+    this.appSearchService.resultsAdd = false;
+    this.appSearchService.text = '';
     this.http.get<Film>(`https://api.themoviedb.org/3/movie/${id}?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&append_to_response=recommendations%2Csimilar%2Cvideos%2Ccredits`)
       .subscribe(response => {
         window.scrollTo(0,0);
@@ -81,6 +84,8 @@ export class FilmComponent implements OnInit {
         if (response.videos.results[0]) {
           this.urlVideo = `https://www.youtube.com/embed/${response.videos.results[0].key}?rel=0;showinfo=0;`;
           this.urlVideoSecurity = this.sanitizer.bypassSecurityTrustResourceUrl(this.urlVideo);
+        } else {
+          this.urlVideo = null;
         }
         this.recommendations = response.recommendations.results.filter((val: object, i: number) => i < 10);
         this.similar = response.similar.results.filter((val: object, i: number) => i < 10);
@@ -102,21 +107,7 @@ export class FilmComponent implements OnInit {
   }
 
   search(eventValue: string) {
-    console.log(eventValue);
-    
-    // if (eventValue.trim().length === 0) {
-    //   this.page = 1;
-    //   this.popularFilms = [];
-    //   this.loadFilms(true);
-    // } else if (eventValue.trim().length > 2) {
-    //   this.http.get<PopularFilms>(`https://api.themoviedb.org/3/search/movie?api_key=b3097ca6783d35649a9f47c87dcbbfa0&language=ru-RU&query=${eventValue}&page=1&include_adult=false`)
-    //   .subscribe(response => {
-    //     this.loading = true;
-    //     this.page = 1;
-    //     this.popularFilms = [];
-    //     this.pushFilms(response.results);
-    //   });
-    // }
+    this.appSearchService.searchAdd(eventValue);
   }
 
   changeFavorites(context: boolean) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppSearchService } from '../shared/app-search.service';
 
 export interface FavoriteFilms {
   id: number
@@ -23,7 +24,7 @@ export class FavoritesComponent implements OnInit {
   favoriteFilms: FavoriteFilms[] = []
   loadingFavorite: boolean = true
 
-  constructor() { }
+  constructor(private appSearchService: AppSearchService) { }
 
   ngOnInit() {
     this.loadFavoriteFilms();
@@ -50,6 +51,7 @@ export class FavoritesComponent implements OnInit {
   }
 
   changeFavorites(id: number, context: boolean) {
+    this.loadingFavorite = true
     let film = this.favoriteFilms.find(film => film.id === id);
     film.favorite = !film.favorite;
     let filmFavoritesArr = JSON.parse(localStorage.getItem('filmFavorites')) || [];
@@ -64,6 +66,11 @@ export class FavoritesComponent implements OnInit {
     }
     localStorage.setItem('filmFavorites', JSON.stringify(filmFavoritesArr));
     this.favoriteFilms = filmFavoritesArr;
+    this.loadingFavorite = false;
+  }
+
+  search(eventValue: string) {
+    this.appSearchService.searchAdd(eventValue);
   }
 
 }

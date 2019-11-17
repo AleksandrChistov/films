@@ -1,5 +1,8 @@
 <app-header (onSearch)="search($event)"></app-header>
 
+
+<p class="loading-title" *ngIf="loadingFavorite">Загрузка контента...</p>
+
 <div class="container-favorite-films" *ngIf="!loadingFavorite">
   <div class="favorite-film-wrap" *ngFor="let film of favoriteFilms">
     <img *ngIf="film.poster_path; else defaultImgSimilar" class="favorite-film-img" src="https://image.tmdb.org/t/p/w400{{film.backdrop_path}}" alt="">
@@ -27,8 +30,6 @@
     </div>
   </div>
 </div>
-
-<p class="loading-title" *ngIf="loadingFavorite">Загрузка контента...</p>
 
 <footer class="footer">
   <img class="home-img" src="/assets/img/logo.png" alt="Logo">

@@ -61,7 +61,7 @@
     </div>
   </section>
 
-  <section class="film-video" *ngIf="urlVideoSecurity">
+  <section class="film-video" *ngIf="urlVideo && urlVideoSecurity">
     <h2 class="film-video__title">Видео (трейлер)</h2>
     <iframe class="film-video-frame" width="640" height="390" [src]="urlVideoSecurity" allowfullscreen></iframe>
   </section>
