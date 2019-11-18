@@ -1,5 +1,7 @@
 # Angular and The Movie DB
 
+Demo: https://opeyes.ru/
+
 Этапы установки приложения:
 
 1. Скачайте файлы приложения нажав зеленую кнопку "Clone or download". В открывшемся окне нажмите кнопку "Download ZIP".
