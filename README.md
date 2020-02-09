@@ -3,4 +3,3 @@
 
 <h3>Demo</h3>
 <p>Page: <a href="https://opeyes.ru/" target="_blank" el= "noopener">https://opeyes.ru/</a></p>
-<p>Репозиторий: <a href="https://github.com/AleksandrChistov/films" target="_blank" el= "noopener">https://github.com/AleksandrChistov/films</a></p>
