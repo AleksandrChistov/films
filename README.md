@@ -1,13 +1,6 @@
-# Angular and The Movie DB
+<h2>Films - SPA приложение для поиска фильмов</h2>
+<p>Angular 8, Typescript, Stylus, БЭМ, API The Movie DB.</p>
 
-Demo: https://opeyes.ru/
-
-Этапы установки приложения:
-
-1. Скачайте файлы приложения нажав зеленую кнопку "Clone or download". В открывшемся окне нажмите кнопку "Download ZIP".
-2. Распакуйте zip-архив с помощью специальной программы, например WinRAR.
-3. Откройте терминал (командную строку или в редакторе кода).
-4. Перейдите в скачанную папку с проектом (команда cd).
-5. Установите зависимости с помощью команды npm install.
-6. С помощью команды ng serve запустите локальный сервер. Это можно сделать в терминале, либо откройте папку в удобном редакторе кода (VSCode, WebStorm и т.д.), откройте там терминал и запустите данную команду.
-7. После этого перейдите по ссылке http://localhost:4200/ .
+<h3>Demo</h3>
+<p>Page: <a href="https://opeyes.ru/" target="_blank" el= "noopener">https://opeyes.ru/</a></p>
+<p>Репозиторий: <a href="https://github.com/AleksandrChistov/films" target="_blank" el= "noopener">https://github.com/AleksandrChistov/films</a></p>
